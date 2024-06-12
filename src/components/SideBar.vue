@@ -20,7 +20,6 @@
     data() {
       return {
         menuItems: [
-          { name: 'Dashboard', link: '/cashier' },
           { name: 'Order', link: '/order' },
           { name: 'Products', link: '/products' },
           //{ name: 'Customers', link: '/customers' },

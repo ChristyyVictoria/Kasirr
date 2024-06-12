@@ -3,7 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import Cashier from '../components/Cashier.vue'
 import Products from '../components/Products.vue'
 import Order from '../components/Order.vue'
-import Dashboard from '../components/Dashboard.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,11 +17,6 @@ const router = createRouter({
       name: "Cashier",
       component: Cashier,
       children: [
-        {
-          path: '',
-          name: 'Dashboard',
-          component: Dashboard,
-        },
         {
           path: "/products",
           name: "Products",

@@ -44,13 +44,13 @@ export default {
     return {
       order: new Order(),
       newItemName: '',
-      newItemPrice: 0,
-      newItemQuantity: 1,
+      newItemPrice: null, // Atur nilai awal menjadi null
+      newItemQuantity: null, // Atur nilai awal menjadi null
     };
   },
   methods: {
     addItem() {
-      if (this.newItemName && this.newItemPrice > 0 && this.newItemQuantity > 0) {
+      if (this.newItemName && this.newItemPrice !== null && this.newItemQuantity !== null && this.newItemPrice > 0 && this.newItemQuantity > 0) {
         this.order.addItem({
           id: Date.now(),
           name: this.newItemName,
@@ -58,15 +58,23 @@ export default {
           quantity: this.newItemQuantity,
         });
         this.newItemName = '';
-        this.newItemPrice = 0;
-        this.newItemQuantity = 1;
+        this.newItemPrice = null; // Setel kembali ke null setelah berhasil menambahkan item
+        this.newItemQuantity = null; // Setel kembali ke null setelah berhasil menambahkan item
       }
     },
     increment(item) {
-      this.order.addItem({ ...item, quantity: 1 });
+      if (this.newItemQuantity === null) {
+        this.newItemQuantity = 1; // Jika field item quantity masih kosong, setel nilainya menjadi 1
+      } else {
+        this.newItemQuantity++; // Jika tidak kosong, tambahkan nilai item quantity
+      }
     },
     decrement(item) {
-      this.order.removeItem(item);
+      if (this.newItemQuantity === null || this.newItemQuantity <= 1) {
+        this.newItemQuantity = 1; // Jika field item quantity masih kosong atau bernilai 1, biarkan nilainya tetap 1
+      } else {
+        this.newItemQuantity--; // Jika tidak kosong dan lebih besar dari 1, kurangi nilai item quantity
+      }
     },
   },
 };

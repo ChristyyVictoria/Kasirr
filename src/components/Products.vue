@@ -144,10 +144,10 @@ export default {
       this.saveProducts();
       this.newProduct.name = '';
       this.newProduct.code = '';
-      this.newProduct.price = 0;
-      this.newProduct.stock = 0;
+      this.newProduct.price = '';
+      this.newProduct.stock = '';
       this.newProduct.image = '';
-      this.showAddProductModal = false;
+      this.showAddProductModal = true;
     },
     removeProduct(productId) {
       this.products = this.products.filter(product => product.id !== productId);
