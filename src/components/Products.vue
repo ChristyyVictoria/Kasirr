@@ -18,7 +18,7 @@
       <h3>Product List</h3>
       <div class="row">
         <div class="col-md-4" v-for="product in filteredProducts" :key="product.id">
-          <div class="card mb-4">
+          <div class="card mb-4 shadow-sm">
             <img :src="product.image" class="card-img-top" alt="Product Image" />
             <div class="card-body">
               <h5 class="card-title">{{ product.name }}</h5>
@@ -27,8 +27,10 @@
                 <strong>Price:</strong> ${{ product.price }}<br />
                 <strong>Stock:</strong> {{ product.stock }}
               </p>
+              <div class="button-group">
               <button class="btn btn-danger btn-sm" @click="removeProduct(product.id)">Remove</button>
               <button class="btn btn-warning btn-sm" @click="editProduct(product)">Edit</button>
+            </div>
             </div>
           </div>
         </div>
@@ -49,7 +51,7 @@
             <input type="text" class="form-control" id="productCode" v-model="newProduct.code" required />
           </div>
           <div class="form-group">
-            <label for="productPrice">Price (USD)</label>
+            <label for="productPrice">Price</label>
             <input type="number" class="form-control" id="productPrice" v-model.number="newProduct.price" required />
           </div>
           <div class="form-group">
@@ -60,8 +62,10 @@
             <label for="productImage">Image</label>
             <input type="file" class="form-control" id="productImage" @change="onImageChange" required />
           </div>
+          <div class="button-group">
           <button type="submit" class="btn btn-primary">Add Product</button>
           <button type="button" class="btn btn-secondary" @click="showAddProductModal = false">Cancel</button>
+            </div>
         </form>
       </div>
     </div>
@@ -80,7 +84,7 @@
             <input type="text" class="form-control" id="editProductCode" v-model="editProductData.code" required />
           </div>
           <div class="form-group">
-            <label for="editProductPrice">Price (USD)</label>
+            <label for="editProductPrice">Price</label>
             <input type="number" class="form-control" id="editProductPrice" v-model.number="editProductData.price" required />
           </div>
           <div class="form-group">
@@ -91,8 +95,10 @@
             <label for="editProductImage">Image</label>
             <input type="file" class="form-control" id="editProductImage" @change="onEditImageChange" />
           </div>
+          <div class="button-group">
           <button type="submit" class="btn btn-primary">Save Changes</button>
           <button type="button" class="btn btn-secondary" @click="showEditProductModal = false">Cancel</button>
+        </div>
         </form>
       </div>
     </div>
@@ -147,7 +153,8 @@ export default {
       this.newProduct.price = '';
       this.newProduct.stock = '';
       this.newProduct.image = '';
-      this.showAddProductModal = true;
+      this.showAddProductModal = false;
+      $('#addProductModal').modal('hide');
     },
     removeProduct(productId) {
       this.products = this.products.filter(product => product.id !== productId);
@@ -183,6 +190,7 @@ export default {
         this.products[productIndex] = { ...this.editProductData };
         this.saveProducts();
         this.showEditProductModal = false;
+        $('#editProductModal').modal('hide');
       }
     }
   },
@@ -196,48 +204,100 @@ export default {
 
 <style scoped>
 .container {
-max-width: 1200px;
-margin: auto;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f9fa; /* Warna latar belakang yang lebih cerah */
 }
 
 .card {
-width: 100%;
-margin-right: 2%;
-margin-bottom: 20px;
-/* Perkecil ukuran font jika diperlukan */
-font-size: 14px;
+  /* width: 100%; */
+  margin-bottom: 20px;
+  font-size: 16px; /* Ukuran font yang sedikit lebih besar */
+  background-color: #ffffff; /* Warna latar belakang kartu */
+  border-radius: 10px; /* Sudut kartu yang lebih bulat */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Efek bayangan saat hover */
 }
 
 .card-img-top {
-max-height: 150px;
-object-fit: cover;
+  max-height: 200px; /* Tinggi maksimum gambar yang lebih besar */
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Pusatkan tombol */
+  gap: 10px;
+}
+
+.btn-primary {
+  background-color: #17a2b8; /* Warna biru cerah */
+  border-color: #17a2b8;
+}
+
+.btn-primary:hover {
+  background-color: #117a8b; /* Warna biru lebih gelap saat hover */
+  border-color: #0e5f70;
 }
 
 @media (max-width: 992px) {
-.card {
-  width: 22%;
-  margin-right: 2%;
-}
+  .card {
+    width: 30%; /* Lebar kartu di layar kecil */
+  }
 }
 
 @media (max-width: 768px) {
-.card {
-  width: 30%;
-  margin-right: 2%;
-}
+  .card {
+    width: 45%; /* Lebar kartu di layar sangat kecil */
+  }
 }
 
 @media (max-width: 576px) {
-.card {
-  width: 46%;
-  margin-right: 2%;
-}
+  .card {
+    width: 100%; /* Kartu memenuhi lebar di layar sangat kecil */
+  }
 }
 
-@media (max-width: 480px) {
-.card {
-  width: 100%;
-  margin-right: 0;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Warna latar belakang overlay lebih gelap */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
 }
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Bayangan lebih jelas */
+  max-width: 500px;
+  /* width: 100%; */
+}
+
+.modal-content h5 {
+  color: #17a2b8; /* Warna teks judul biru cerah */
+}
+
+.modal-content .form-control {
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.modal-content .btn {
+  border-radius: 5px;
 }
 </style>

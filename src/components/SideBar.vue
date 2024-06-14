@@ -7,12 +7,12 @@
         <img src="@/assets/admin.jpeg" alt="Admin Avatar" class="admin-avatar">
         <p>Admin</p>
       </div>
-      <ul class="list-group mt-3">
-        <li class="list-group-item" v-for="item in menuItems" :key="item.name">
-          <router-link :to="item.link">{{ item.name }}</router-link>
-        </li>
-      </ul>
+      <div class="button-group mt-3">
+      <button class="btn btn-primary mb-2 w-100" v-for="item in menuItems" :key="item.name" @click="navigateTo(item.link)">
+        {{ item.name }}
+      </button>
     </div>
+  </div>
   </template>
   
   <script>
@@ -25,10 +25,15 @@
           //{ name: 'Customers', link: '/customers' },
           //{ name: 'Reports', link: '/reports' },
           //{ name: 'Settings', link: '/settings' },
-        ],
-      };
+          ],
+    };
+  },
+  methods: {
+    navigateTo(link) {
+      this.$router.push(link);
     },
-  };
+  },
+};
   </script>
   
   <style scoped>
