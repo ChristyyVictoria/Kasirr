@@ -65,6 +65,8 @@ export default {
 <style scoped>
 .login-box h2 {
   font-weight: bold;
+  color: #333333;
+  margin-bottom: 30px; /* Lebih banyak ruang di bawah heading */
 }
 .split-screen {
   display: flex;
@@ -80,17 +82,60 @@ export default {
 }
 .left-panel {
   background: #faf3f0;
-  color: black;
+  color: rgb(39, 39, 39);
 }
 .right-panel {
   background: #3d3c42;
 }
 .login-box {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 300px;
+  max-width: 400px; /* Lebih besar untuk ruang tambahan */
+  padding: 20px;
+  border-radius: 8px;
+  background: #bc9a89e6; /* Latar belakang abu-abu terang */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
 }
 .form-control {
   margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333333;
+}
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: all 0.3s ease; /* Efek transisi */
+}
+.form-control:focus {
+  border-color: #007bff; /* Warna fokus */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Bayangan fokus */
+}
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #423627; /* Warna tombol biru */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.btn:hover {
+  background: #faf3f0; /* Warna tombol saat hover */
+  color: #1d1c1b;
+  stroke-width: 1px;
 }
 </style>
